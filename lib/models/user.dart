@@ -2,7 +2,7 @@ import '../string_util.dart';
 
 enum LoginType { email, phone }
 
-class User {
+class User with UserUtils {
   String phone, email, _lastName, _firstName;
   LoginType _type;
   List<User> friends = [];
