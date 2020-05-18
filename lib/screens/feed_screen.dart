@@ -51,11 +51,15 @@ class _FeedState extends State<Feed> {
                   userName: 'kaparray',
                   name: 'Kirill Adeshchenko',
                   altDescription: 'This is Flutter dash. I love him :)',
+                  heroTag: 'photo_$index',
                 ),
               ),
             );
           },
-          child: Photo(photoLink: kFlutterDash),
+          child: Hero(
+            tag: 'photo_$index',
+            child: Photo(photoLink: kFlutterDash),
+          ),
         ),
         _buildPhotoMeta(index),
         Padding(

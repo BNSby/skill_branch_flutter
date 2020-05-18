@@ -9,8 +9,10 @@ class FullScreenImage extends StatefulWidget {
   String userName;
   String name;
   String photo;
+  String heroTag;
 
-  FullScreenImage({photo, Key key, userName, name, altDescription}) : super(key: key) {
+  FullScreenImage({photo, Key key, userName, name, altDescription, heroTag}) : super(key: key) {
+    this.heroTag = heroTag;
     this.userName = userName ?? 'guest';
     this.name = name ?? 'name';
     this.altDescription = altDescription ?? 'text...';
@@ -59,7 +61,10 @@ class _FullScreenImageState extends State<FullScreenImage> with TickerProviderSt
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Photo(photoLink: widget.photo),
+            Hero(
+              tag: widget.heroTag,
+              child: Photo(photoLink: widget.photo),
+            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               child: Text(
