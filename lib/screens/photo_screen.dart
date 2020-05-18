@@ -8,15 +8,15 @@ class FullScreenImage extends StatefulWidget {
   String altDescription;
   String userName;
   String name;
-  String photo;
+  String userPhoto;
   String heroTag;
 
-  FullScreenImage({photo, Key key, userName, name, altDescription, heroTag}) : super(key: key) {
+  FullScreenImage({userPhoto, Key key, userName, name, altDescription, heroTag}) : super(key: key) {
     this.heroTag = heroTag;
     this.userName = userName ?? 'guest';
     this.name = name ?? 'name';
     this.altDescription = altDescription ?? 'text...';
-    this.photo = photo ??
+    this.userPhoto = userPhoto ??
         'https://flutter.dev/assets/404/dash_nest-c64796b59b65042a2b40fae5764c13b7477a592db79eaf04c86298dcb75b78ea.png';
   }
 
@@ -63,7 +63,7 @@ class _FullScreenImageState extends State<FullScreenImage> with TickerProviderSt
           children: <Widget>[
             Hero(
               tag: widget.heroTag,
-              child: Photo(photoLink: widget.photo),
+              child: Photo(photoLink: widget.userPhoto),
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),

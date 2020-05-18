@@ -47,7 +47,7 @@ class _FeedState extends State<Feed> {
               context,
               MaterialPageRoute(
                 builder: (BuildContext context) => FullScreenImage(
-                  photo: kFlutterDash,
+                  userPhoto: kFlutterDash,
                   userName: 'kaparray',
                   name: 'Kirill Adeshchenko',
                   altDescription: 'This is Flutter dash. I love him :)',
