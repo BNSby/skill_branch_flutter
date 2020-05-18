@@ -9,13 +9,17 @@ class FullScreenImage extends StatefulWidget {
   String userName;
   String name;
   String userPhoto;
+  String photo;
   String heroTag;
 
-  FullScreenImage({userPhoto, Key key, userName, name, altDescription, heroTag}) : super(key: key) {
+  FullScreenImage({photo, userPhoto, Key key, userName, name, altDescription, heroTag})
+      : super(key: key) {
     this.heroTag = heroTag;
     this.userName = userName ?? 'guest';
     this.name = name ?? 'name';
     this.altDescription = altDescription ?? 'text...';
+    this.photo = photo ??
+        'https://flutter.dev/assets/404/dash_nest-c64796b59b65042a2b40fae5764c13b7477a592db79eaf04c86298dcb75b78ea.png';
     this.userPhoto = userPhoto ??
         'https://flutter.dev/assets/404/dash_nest-c64796b59b65042a2b40fae5764c13b7477a592db79eaf04c86298dcb75b78ea.png';
   }
