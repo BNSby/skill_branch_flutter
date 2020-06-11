@@ -37,10 +37,10 @@ class _LikeButtonState extends State<LikeButton> {
               Text(
                 likeCount.toString(),
                 textAlign: TextAlign.center,
-                style: AppStyles.h4.copyWith(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: Theme.of(context).textTheme.headline4.copyWith(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
               )
             ],
           ),

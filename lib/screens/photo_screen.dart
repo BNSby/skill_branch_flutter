@@ -1,8 +1,32 @@
+import 'package:FlutterGalleryApp/widgets/claim_bottom_sheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:gallery_saver/gallery_saver.dart';
 import '../widgets/widgets.dart';
 import '../res/res.dart';
+
+class FullScreenImageArguments {
+  final Key key;
+  final String photo;
+  final String altDescription;
+  final String userName;
+  final String name;
+  final String userPhoto;
+  final String heroTag;
+  final RouteSettings settings;
+
+  FullScreenImageArguments({
+    this.key,
+    this.photo,
+    this.altDescription,
+    this.userName,
+    this.name,
+    this.userPhoto,
+    this.heroTag,
+    this.settings,
+  });
+}
 
 class FullScreenImage extends StatefulWidget {
   String altDescription;
@@ -60,6 +84,7 @@ class _FullScreenImageState extends State<FullScreenImage> with TickerProviderSt
             icon: Icon(CupertinoIcons.back),
             onPressed: () => Navigator.pop(context),
           ),
+          actions: <Widget>[BottomSheetButton()],
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -75,7 +100,7 @@ class _FullScreenImageState extends State<FullScreenImage> with TickerProviderSt
                 widget.altDescription,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
-                style: AppStyles.h3,
+                style: Theme.of(context).textTheme.headline3,
               ),
             ),
             AnimatedBuilder(
@@ -96,10 +121,13 @@ class _FullScreenImageState extends State<FullScreenImage> with TickerProviderSt
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(widget.name, style: AppStyles.h1Black),
+                            Text(widget.name, style: Theme.of(context).textTheme.headline1),
                             Text(
                               '@' + widget.userName,
-                              style: AppStyles.h5Black.copyWith(color: AppColors.manatee),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5
+                                  .copyWith(color: AppColors.manatee),
                             ),
                           ],
                         ),
@@ -117,7 +145,7 @@ class _FullScreenImageState extends State<FullScreenImage> with TickerProviderSt
                   LikeButton(likeCount: 10, isLiked: true),
                   Row(
                     children: <Widget>[
-                      _buildButton(txt: 'Save'),
+                      _buildButton(txt: 'Save', needDialog: true),
                       SizedBox(width: 10),
                       _buildButton(txt: 'Visit'),
                     ],
@@ -153,19 +181,62 @@ class _FullScreenImageState extends State<FullScreenImage> with TickerProviderSt
         .value;
   }
 
-  Widget _buildButton({String txt = 'Button'}) {
+  Widget _buildButton({String txt = 'Button', bool needDialog = false}) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        needDialog
+            ? showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Downloading photos'),
+                    content: Text('Are you sure you want to upload a photo?'),
+                    elevation: 24,
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text('Download'),
+                        onPressed: () async {
+                          await GallerySaver.saveImage(widget.photo);
+                          Navigator.pop(context);
+                        },
+                      ),
+                      FlatButton(
+                        child: Text('Close'),
+                        onPressed: () => Navigator.pop(context),
+                      )
+                    ],
+                  );
+                },
+              )
+            : '';
+      },
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.dodgerBlue,
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
+          padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 10.0),
           child: Text(txt, style: TextStyle(color: Colors.white, fontSize: 18)),
         ),
       ),
+    );
+  }
+}
+
+class BottomSheetButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Icon(Icons.more_vert),
+      color: AppColors.grayChateau,
+      onPressed: () {
+        showModalBottomSheet(
+          context: context,
+          builder: (context) => ClaimBottomSheet(),
+        );
+      },
     );
   }
 }

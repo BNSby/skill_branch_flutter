@@ -43,18 +43,17 @@ class _FeedState extends State<Feed> {
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            Navigator.push(
+            Navigator.pushNamed(
               context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => FullScreenImage(
+              '/fullScreenImage',
+              arguments: FullScreenImageArguments(
                   photo: kFlutterDash,
                   userPhoto: kFlutterDash,
                   userName: 'kaparray',
                   name: 'Kirill Adeshchenko',
                   altDescription: 'This is Flutter dash. I love him :)',
                   heroTag: 'photo_$index',
-                ),
-              ),
+                  settings: RouteSettings(arguments: kFlutterDash)),
             );
           },
           child: Hero(
@@ -69,7 +68,8 @@ class _FeedState extends State<Feed> {
             'This is Flutter dash. I love him :)',
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
-            style: AppStyles.h3.copyWith(color: AppColors.manatee),
+            style: Theme.of(context).textTheme.headline3.copyWith(color: AppColors.manatee),
+//            style: AppStyles.h3.copyWith(color: AppColors.manatee),
           ),
         )
       ],
@@ -90,8 +90,10 @@ class _FeedState extends State<Feed> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text('Kirill Adeshchenko', style: AppStyles.h2Black),
-                  Text('@kaparray', style: AppStyles.h5Black.copyWith(color: AppColors.manatee)),
+                  Text('Kirill Adeshchenko', style: Theme.of(context).textTheme.headline2),
+                  Text('@kaparray',
+                      style:
+                          Theme.of(context).textTheme.headline5.copyWith(color: AppColors.manatee)),
                 ],
               ),
             ],
