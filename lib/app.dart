@@ -14,13 +14,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Home(),
-      theme: ThemeData(textTheme: AppStyles().buildAppTextTheme()),
+      theme: ThemeData(textTheme: buildAppTextTheme()),
       onUnknownRoute: (RouteSettings settings) {
         return MaterialPageRoute(
-            builder: (BuildContext context) => Scaffold(
-                  body: Center(
-                    child: Column(
-                      children: <Widget>[Text('404'), Text('Page not found')],
+            builder: (BuildContext context) => SafeArea(
+                  child: Scaffold(
+                    body: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[Text('404'), Text('Page not found')],
+                      ),
                     ),
                   ),
                 ));
