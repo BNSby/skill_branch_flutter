@@ -30,10 +30,10 @@ class _HomeState extends State<Home> {
     subscription = widget.onConnectivityChanged.listen((ConnectivityResult result) {
       switch (result) {
         case ConnectivityResult.wifi:
-          connectiveOverlay.removeOverlay(context);
+          connectiveOverlay.removeOverlay();
           break;
         case ConnectivityResult.mobile:
-          connectiveOverlay.removeOverlay(context);
+          connectiveOverlay.removeOverlay();
           break;
         case ConnectivityResult.none:
           connectiveOverlay.showOverlay(context, Text('No internet connection'));

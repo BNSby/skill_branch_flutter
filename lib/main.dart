@@ -23,7 +23,7 @@ class ConnectivityOverlay {
     overlayContext?.insert(overlayEntry);
   }
 
-  void removeOverlay(BuildContext context) {
+  void removeOverlay() {
     overlayEntry?.remove();
   }
 
