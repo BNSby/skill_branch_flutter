@@ -1,63 +1,54 @@
+import 'package:FlutterGalleryApp/res/colors.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+import 'app.dart';
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+void main() => runApp(MyApp(Connectivity().onConnectivityChanged));
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class ConnectivityOverlay {
+  static final ConnectivityOverlay _singleton = ConnectivityOverlay._internal();
 
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  factory ConnectivityOverlay() {
+    return _singleton;
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+  ConnectivityOverlay._internal();
+
+  static OverlayEntry overlayEntry;
+
+  void showOverlay(BuildContext context, Widget child) {
+    overlayEntry = _overlayWidget(child);
+    final overlayContext = Overlay.of(context);
+    overlayContext?.insert(overlayEntry);
+  }
+
+  void removeOverlay() {
+    overlayEntry?.remove();
+  }
+
+  OverlayEntry _overlayWidget(Widget child) {
+    return OverlayEntry(
+      builder: (BuildContext context) {
+        return Positioned(
+          top: 100,
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width,
+              child: Container(
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: AppColors.mercury,
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+                child: child,
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
+          ),
+        );
+      },
     );
   }
 }
